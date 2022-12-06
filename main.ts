@@ -8,28 +8,26 @@ let R = 0
 let G = 1
 let B = 2
 let P = 3
-let S = true
+let S = false
 basic.forever(function () {
-    if (input.soundLevel() > 120) {
+    if (input.soundLevel() > 50) {
         S = !(S)
         if (S == true) {
             distance = DFRobotMaqueenPlusV2.readUltrasonic(DigitalPin.P13, DigitalPin.P14)
-            if (true) {
-                direction = randint(1, 2)
-                if (distance < 30 && distance != 0) {
-                    if (direction == 1) {
-                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 100)
-                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 0)
-                        basic.pause(1000)
-                    }
-                    if (direction == 2) {
-                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 0)
-                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 100)
-                        basic.pause(1000)
-                    }
-                } else {
-                    DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eAllMotor, MyEnumDir.eForward, 50)
+            direction = randint(1, 2)
+            if (distance < 30 && distance != 0) {
+                if (direction == 1) {
+                    DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 100)
+                    DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 0)
+                    basic.pause(1000)
                 }
+                if (direction == 2) {
+                    DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 0)
+                    DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 100)
+                    basic.pause(1000)
+                }
+            } else {
+                DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eAllMotor, MyEnumDir.eForward, 50)
             }
         } else {
             DFRobotMaqueenPlusV2.controlMotorStop(MyEnumMotor.eAllMotor)
