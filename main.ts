@@ -1,6 +1,6 @@
+let n = 0
 let direction = 0
 let distance = 0
-let n = 0
 DFRobotMaqueenPlusV2.init()
 DFRobotMaqueenPlusV2.controlLED(MyEnumLed.eAllLed, MyEnumSwitch.eOpen)
 DFRobotMaqueenPlusV2.setBrightness(100)
@@ -8,6 +8,37 @@ let R = 0
 let G = 1
 let B = 2
 let P = 3
+let S = true
+basic.forever(function () {
+    if (input.soundLevel() > 120) {
+        S = !(S)
+        if (S == true) {
+            distance = DFRobotMaqueenPlusV2.readUltrasonic(DigitalPin.P13, DigitalPin.P14)
+            if (true) {
+                direction = randint(1, 2)
+                if (distance < 30 && distance != 0) {
+                    if (direction == 1) {
+                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 100)
+                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 0)
+                        basic.pause(1000)
+                    }
+                    if (direction == 2) {
+                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 0)
+                        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 100)
+                        basic.pause(1000)
+                    }
+                } else {
+                    DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eAllMotor, MyEnumDir.eForward, 50)
+                }
+            }
+        } else {
+            DFRobotMaqueenPlusV2.controlMotorStop(MyEnumMotor.eAllMotor)
+            DFRobotMaqueenPlusV2.controlLED(MyEnumLed.eAllLed, MyEnumSwitch.eClose)
+        }
+    } else {
+        basic.pause(200)
+    }
+})
 basic.forever(function () {
     if (R <= 3) {
         DFRobotMaqueenPlusV2.setIndexColor(R, 0xff0000)
@@ -35,22 +66,4 @@ basic.forever(function () {
     }
     n += 1
     basic.pause(1000)
-})
-basic.forever(function () {
-    distance = DFRobotMaqueenPlusV2.readUltrasonic(DigitalPin.P13, DigitalPin.P14)
-    direction = randint(1, 2)
-    if (distance < 30 && distance != 0) {
-        if (direction == 1) {
-            DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 100)
-            DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 0)
-            basic.pause(1000)
-        }
-        if (direction == 2) {
-            DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 0)
-            DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 100)
-            basic.pause(1000)
-        }
-    } else {
-        DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eAllMotor, MyEnumDir.eForward, 50)
-    }
 })
