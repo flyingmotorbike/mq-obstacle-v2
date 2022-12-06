@@ -9,13 +9,16 @@ let G = 1
 let B = 2
 let P = 3
 let S = false
+music.setBuiltInSpeakerEnabled(true)
 basic.forever(function () {
     if (input.soundLevel() > 50) {
         S = !(S)
         if (S == true) {
+            music.playTone(523, music.beat(BeatFraction.Whole))
             distance = DFRobotMaqueenPlusV2.readUltrasonic(DigitalPin.P13, DigitalPin.P14)
             direction = randint(1, 2)
             if (distance < 30 && distance != 0) {
+                music.ringTone(988)
                 if (direction == 1) {
                     DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eLeftMotor, MyEnumDir.eForward, 100)
                     DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eRightMotor, MyEnumDir.eForward, 0)
@@ -27,13 +30,16 @@ basic.forever(function () {
                     basic.pause(1000)
                 }
             } else {
+                music.ringTone(494)
                 DFRobotMaqueenPlusV2.controlMotor(MyEnumMotor.eAllMotor, MyEnumDir.eForward, 50)
             }
         } else {
+            music.playTone(262, music.beat(BeatFraction.Whole))
             DFRobotMaqueenPlusV2.controlMotorStop(MyEnumMotor.eAllMotor)
             DFRobotMaqueenPlusV2.controlLED(MyEnumLed.eAllLed, MyEnumSwitch.eClose)
         }
     } else {
+        music.playTone(131, music.beat(BeatFraction.Whole))
         basic.pause(200)
     }
 })
